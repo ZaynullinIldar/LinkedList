@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <cassert>
 
 template<typename T>
@@ -39,20 +40,23 @@ public:
             _current_ptr = _head_ptr;
 
             _size++;
-        } else {
-            _current_ptr->next = new Node<T>;
 
-            _current_ptr = _current_ptr->next;
-
-            _current_ptr->value = value;
-            _current_ptr->next = nullptr;
-
-            _size++;
+            return;
         }
 
+        _current_ptr->next = new Node<T>;
+        _current_ptr = _current_ptr->next;
+
+        _current_ptr->value = value;
+        _current_ptr->next = nullptr;
+
+        _size++;
     }
 
     void pop_back() {
+        if (_size == 0) {
+            return;
+        }
         _current_ptr = _head_ptr;
 
         if (_size == 1) {
@@ -100,12 +104,12 @@ public:
         }
     }
 
-    int& head() {
+    T& head() {
         assert(_head_ptr != nullptr);
         return _head_ptr->value;
     }
 
-    int& tail() {
+    T& tail() {
         assert(_current_ptr != nullptr);
         return _current_ptr->value;
     }
